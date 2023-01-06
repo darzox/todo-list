@@ -34,3 +34,30 @@ func (t *TodoItemService) GetAllItems(userId, listId int) ([]model.TodoItem, err
 	}
 	return t.repo.GetAllItems(listId)
 }
+
+func (t *TodoItemService) GetItem(userId, listId, itemId int) (model.TodoItem, error) {
+	_, err := t.listRepo.GetListById(userId, listId)
+	if err != nil {
+		// list does not exists or does not belongs to user
+		return model.TodoItem{}, err
+	}
+	return t.repo.GetItem(itemId)
+}
+
+func (t *TodoItemService) UpdateItem(userId, listId, itemId int, input model.UpdateItem) error {
+	_, err := t.listRepo.GetListById(userId, listId)
+	if err != nil {
+		// list does not exists or does not belongs to user
+		return err
+	}
+	return t.repo.UpdateItem(itemId, input)
+}
+
+func (t *TodoItemService) DeleteItem(userId, listId, itemId int) error {
+	_, err := t.listRepo.GetListById(userId, listId)
+	if err != nil {
+		// list does not exists or does not belongs to user
+		return err
+	}
+	return t.repo.DeleteItem(itemId)
+}

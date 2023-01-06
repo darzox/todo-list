@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -106,7 +105,6 @@ func (h *Handler) deleteListById(c *gin.Context) {
 
 	err = h.services.DeleteList(userId, id)
 	if err != nil {
-		fmt.Println(err)
 		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
 		return
 	}

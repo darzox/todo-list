@@ -6,14 +6,6 @@ import (
 	"todo-app/internal/model"
 )
 
-const (
-	userTable       = "users"
-	todoListTable   = "lists"
-	usersListsTable = "users_lists"
-	todoItemsTable  = "items"
-	listsItemsTable = "lists_items"
-)
-
 type Authorization interface {
 	CreateUser(user model.User) (int, error)
 	GetUser(username, password string) (model.User, error)
@@ -30,6 +22,9 @@ type TodoList interface {
 type TodoItem interface {
 	CreateItem(userId, listId int, item model.TodoItem) (int, error)
 	GetAllItems(listId int) ([]model.TodoItem, error)
+	GetItem(itemId int) (model.TodoItem, error)
+	UpdateItem(itemId int, input model.UpdateItem) error
+	DeleteItem(itemId int) error
 }
 
 type Repository struct {
